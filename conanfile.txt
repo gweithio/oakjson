@@ -1,0 +1,6 @@
+[requires]
+log.c/cci.20200620
+json-c/0.16
+
+[generators]
+cmake
