@@ -1,5 +1,5 @@
 #include "oakjson/oakjson.h"
-#include "json-c/json_object.h"
+
 #include <json-c/json.h>
 #include <stdlib.h>
 #include <log.h>
@@ -24,22 +24,36 @@ uint8_t oakjson_create_object(oakjson_ctx* oak, const char* filepath) {
     return 1;
   }
 
+  FILE* f = fopen(filepath, "r");
+
+  if (f) {
+    fseek(f, 0, SEEK_END);
+    oak->file->file_size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+  }
+
+  fclose(f);
+
   return 0;
 }
 
-uint8_t oakjson_ctx_add(oakjson_ctx* oak, oakjson_object_types type,
-                        const char* name, const char* value) {
-  switch (type) {
-    case STRING: {
-      json_object_object_add(oak->file->object, name,
-                             json_object_new_string(value));
-    }
-    case ARRAY:
-      // TODO(ethan): Implement soon as pls :)
-      return 0;
-    default:
-      return 0;
+uint8_t oakjson_ctx_add_string(oakjson_ctx* oak, const char* name,
+                               const char* value) {
+  uint8_t add_res = json_object_object_add(oak->file->object, name,
+                                           json_object_new_string(value));
+
+  if (!add_res) {
+    log_error("Failed to add string to object\n");
+    return 1;
   }
+
+  return 0;
+}
+
+uint8_t oakjson_ctx_remove(oakjson_ctx* oak, const char* name,
+                           uint8_t remove_whole) {
+  // TODO(ethan): implement this :)
+  return 0;
 }
 
 void oakjson_ctx_debug(oakjson_ctx* oak, uint8_t show_contents) {
