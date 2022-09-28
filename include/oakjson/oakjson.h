@@ -59,8 +59,7 @@ uint8_t oakjson_ctx_remove_string(oakjson_ctx* oak, const char* name);
  * @param name - the name of the value
  * @param value - the value itself
  * @returns succesc (0) or failure (1) */
-uint8_t oakjson_ctx_add_array(oakjson_ctx* oak, const char* name,
-                              const char* value);
+uint8_t oakjson_ctx_add_array(oakjson_ctx* oak, const char* value);
 
 /* Removes a specific json element from the json structure or the whole array
  * @param oak - the context we want to remove from
@@ -68,8 +67,7 @@ uint8_t oakjson_ctx_add_array(oakjson_ctx* oak, const char* name,
  * @param remove_whole -
  * whether to remove the whole array returns: success (0) or failure (1)
  * @returns success (0) or failure (1) */
-uint8_t oakjson_ctx_remove_array(oakjson_ctx* oak, const char* name,
-                                 uint8_t remove_whole);
+uint8_t oakjson_ctx_remove_array(oakjson_ctx* oak);
 
 /* Frees/Destroys our oak context
  * @param oak - the context to destroy

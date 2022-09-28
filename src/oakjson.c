@@ -1,4 +1,6 @@
 #include "oakjson/oakjson.h"
+#include "json-c/json_object.h"
+#include "oakjson/base.h"
 
 #include <json-c/json.h>
 #include <stdlib.h>
@@ -50,9 +52,28 @@ uint8_t oakjson_ctx_add_string(oakjson_ctx* oak, const char* name,
   return 0;
 }
 
-uint8_t oakjson_ctx_remove(oakjson_ctx* oak, const char* name,
-                           uint8_t remove_whole) {
-  // TODO(ethan): implement this :)
+uint8_t oakjson_ctx_remove_string(oakjson_ctx* oak, const char* name) {
+  json_object_object_del(oak->file->object, name);
+  return 1;
+}
+
+uint8_t oakjson_ctx_add_array(oakjson_ctx* oak, const char* value) {
+  json_object* arr       = json_object_new_array();
+  json_object* str_value = json_object_new_string(value);
+
+  if (!json_object_array_put_idx(oak->file->object, 0, arr))
+    return 1;
+
+  if (!json_object_array_add(arr, str_value))
+    return 1;
+
+  return 0;
+}
+
+uint8_t oakjson_ctx_remove_array(oakjson_ctx* oak) {
+  if (!json_object_array_del_idx(oak->file->object, 0, (size_t)500))
+    return 1;
+
   return 0;
 }
 
