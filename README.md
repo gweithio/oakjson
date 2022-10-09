@@ -7,7 +7,7 @@
     </p>
 </div>
 
-### NOTE: Currently this repository is a work in progress
+### NOTE: Currently this repository is a work in progress, and will probably be forgotten ;)
 
 ### About
 
